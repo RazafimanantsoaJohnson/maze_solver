@@ -1,6 +1,8 @@
 from tkinter import Tk,BOTH, Canvas
 from line import Line
 from point import Point
+from cell import Cell
+from maze import Maze
 
 class Window:
     def __init__(self,width,height):
@@ -30,14 +32,8 @@ class Window:
 
 def main():
 
-    win= Window(800,600)
-    line4= Line(Point(0,0),Point(600,600))
-    line5= Line(Point(50,0),Point(600,600))
-    line6= Line(Point(600,0),Point(600,600))
-    win.draw_line(line4, "black")
-    win.draw_line(line5, "red")
-    win.draw_line(line6, "gray")
-
+    win= Window(800,600)  
+    maze= Maze(50,50,6,5,100,100, win)
     win.wait_for_close()
 
 main()
