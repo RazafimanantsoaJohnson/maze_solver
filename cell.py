@@ -2,7 +2,7 @@ from line import Line
 from point import Point
 
 class Cell:
-    def __init__(self, pointA, pointB, window= None):
+    def __init__(self, pointA, pointB, window= None, visited= False):
         self._win= window
         self._x1= pointA.x
         self._x2= pointB.x
@@ -12,6 +12,7 @@ class Cell:
         self.has_bottom_wall= True
         self.has_right_wall= True
         self.has_left_wall= True
+        self.visited= visited
 
     def draw(self):
         walls= []
