@@ -105,5 +105,33 @@ class Maze:
             for j in range(self.num_cols):
                 self._cells[i][j].visited= False
         
+    def solve(self):
+        return self._solve_r(0,0)
 
+    def _solve_r(self,i,j):
+        self._animate()
+        self._cells[i][j].visited= True
+        if i== self.num_rows-1 and j== self.num_cols -1:
+            return True
+        possible_directions= self._get_adjacent_cells(i,j)
+        for possible_direction in possible_directions:
+            x,y= possible_direction
+            if not(self._cells[x][y].visited):
+                is_there_blocking_wall= True
+                if x<i:
+                    is_there_blocking_wall= is_there_blocking_wall and (self._cells[i][j].has_upper_wall and self._cells[x][y].has_bottom_wall)
+                if x>i:
+                    is_there_blocking_wall= is_there_blocking_wall and (self._cells[i][j].has_bottom_wall and self._cells[x][y].has_upper_wall)
+                if y<j:
+                    is_there_blocking_wall= is_there_blocking_wall and (self._cells[i][j].has_left_wall and self._cells[x][y].has_right_wall)
+                if y>j:
+                    is_there_blocking_wall= is_there_blocking_wall and (self._cells[i][j].has_right_wall and self._cells[x][y].has_left_wall)
+                if not(is_there_blocking_wall):
+                    self._cells[i][j].draw_move(self._cells[x][y])
+                    is_direction_valid= self._solve_r(x,y)
+                    if is_direction_valid:
+                        return True
+                    else:
+                        self._cells[i][j].draw_move(self._cells[x][y],True)
+        return False
 
