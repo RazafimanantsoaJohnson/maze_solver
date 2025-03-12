@@ -15,17 +15,16 @@ class Cell:
 
     def draw(self):
         walls= []
-        if self.has_upper_wall:
-            walls.append(Line( pointA= Point(self._x1, self._y1), pointB= Point(self._x2, self._y1) ))
-        if self.has_bottom_wall:
-            walls.append(Line( pointA= Point(self._x1, self._y2) , pointB=Point(self._x2, self._y2) ))
-        if self.has_left_wall:
-            walls.append(Line( pointA= Point(self._x1, self._y1), pointB= Point(self._x1, self._y2) ))
-        if self.has_right_wall:
-            walls.append(Line( pointA= Point(self._x2, self._y1) ,pointB= Point(self._x2, self._y2) ))
+        walls.append({"line":Line( pointA= Point(self._x1, self._y1), pointB= Point(self._x2, self._y1) ), "value": self.has_upper_wall})
+        walls.append({"line":Line( pointA= Point(self._x1, self._y2) , pointB=Point(self._x2, self._y2) ), "value": self.has_bottom_wall})
+        walls.append({"line":Line( pointA= Point(self._x1, self._y1), pointB= Point(self._x1, self._y2) ), "value": self.has_left_wall})
+        walls.append({"line":Line( pointA= Point(self._x2, self._y1) ,pointB= Point(self._x2, self._y2) ), "value": self.has_right_wall})
         
         for wall in walls:
-            self._win.draw_line(wall, "black")
+            if wall["value"]:
+                self._win.draw_line(wall["line"], "black")
+            else:
+                self._win.draw_line(wall["line"], "white")
 
     def draw_move(self, to_cell, undo= False):
         color= "red"
